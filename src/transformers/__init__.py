@@ -351,6 +351,7 @@ _import_structure = {
         "NystromformerConfig",
     ],
     "models.oneformer": ["ONEFORMER_PRETRAINED_CONFIG_ARCHIVE_MAP", "OneFormerConfig", "OneFormerProcessor"],
+    "models.open_llama": ["OPEN_LLAMA_PRETRAINED_CONFIG_ARCHIVE_MAP", "OpenLlamaConfig"],
     "models.openai": ["OPENAI_GPT_PRETRAINED_CONFIG_ARCHIVE_MAP", "OpenAIGPTConfig", "OpenAIGPTTokenizer"],
     "models.opt": ["OPTConfig"],
     "models.owlvit": [
@@ -1902,6 +1903,9 @@ else:
             "OneFormerPreTrainedModel",
         ]
     )
+    _import_structure["models.open_llama"].extend(
+        ["OpenLlamaForCausalLM", "OpenLlamaForSequenceClassification", "OpenLlamaModel", "OpenLlamaPreTrainedModel"]
+    )
     _import_structure["models.openai"].extend(
         [
             "OPENAI_GPT_PRETRAINED_MODEL_ARCHIVE_LIST",
@@ -2600,6 +2604,8 @@ if is_torch_available():
         "HoulsbyInvConfig",
         "IA3Config",
         "InvertibleAdaptersMixin",
+        "LlamaAdapterModel",
+        "LlamaModelWithHeads",
         "LoRAConfig",
         "MAMConfig",
         "MBartAdapterModel",
@@ -4080,6 +4086,7 @@ if TYPE_CHECKING:
         from .models.fnet import FNetTokenizer
         from .models.gpt_sw3 import GPTSw3Tokenizer
         from .models.layoutxlm import LayoutXLMTokenizer
+        from .models.llama import LlamaTokenizer
         from .models.m2m_100 import M2M100Tokenizer
         from .models.marian import MarianTokenizer
         from .models.mbart import MBart50Tokenizer, MBartTokenizer
@@ -4234,6 +4241,7 @@ if TYPE_CHECKING:
         from .models.mobilenet_v2 import MobileNetV2FeatureExtractor, MobileNetV2ImageProcessor
         from .models.mobilevit import MobileViTFeatureExtractor, MobileViTImageProcessor
         from .models.oneformer import OneFormerImageProcessor
+        from .models.open_llama import OPEN_LLAMA_PRETRAINED_CONFIG_ARCHIVE_MAP, OpenLlamaConfig
         from .models.owlvit import OwlViTFeatureExtractor, OwlViTImageProcessor
         from .models.perceiver import PerceiverFeatureExtractor, PerceiverImageProcessor
         from .models.poolformer import PoolFormerFeatureExtractor, PoolFormerImageProcessor
@@ -5130,6 +5138,12 @@ if TYPE_CHECKING:
             OneFormerForUniversalSegmentation,
             OneFormerModel,
             OneFormerPreTrainedModel,
+        )
+        from .models.open_llama import (
+            OpenLlamaForCausalLM,
+            OpenLlamaForSequenceClassification,
+            OpenLlamaModel,
+            OpenLlamaPreTrainedModel,
         )
         from .models.openai import (
             OPENAI_GPT_PRETRAINED_MODEL_ARCHIVE_LIST,

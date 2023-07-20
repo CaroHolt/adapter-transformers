@@ -45,6 +45,10 @@ CONFIG_CLASS_KEYS_MAPPING = {
         "hidden_dropout_prob": "dropout",
         "attention_probs_dropout_prob": "attention_dropout",
     },
+    "open_llama": {
+        "hidden_dropout_prob": "resid_pdrop",
+        "attention_probs_dropout_prob": "attn_pdrop",
+    },
     "roberta": {},
     "t5": {
         "hidden_size": "d_model",

@@ -314,6 +314,22 @@ STATIC_TO_FLEX_HEAD_MAP = {
         },
         "layers": ["lm_head"],
     },
+    # OpenLlama
+    "OpenLlamaForSequenceClassification": {
+        "config": {
+            "head_type": "classification",
+            "layers": 1,
+            "activation_function": None,
+            "bias": False,
+        },
+        "layers": [None, "score"],
+    },
+    "OpenLlamaForCausalLM": {
+        "config": {
+            "head_type": "causal_lm",
+        },
+        "layers": ["lm_head"],
+    },
     # DistilBERT
     "DistilBertForSequenceClassification": {
         "config": {
