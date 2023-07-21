@@ -15,6 +15,7 @@ MODELS_WITH_ADAPTERS = [
     "gpt2",
     "gptj",
     "encoder_decoder",
+    "open_llama",
     "t5",
     "deberta",
     "deberta_v2",
