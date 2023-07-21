@@ -386,6 +386,7 @@ class LlamaAttention(nn.Module):
 class LlamaDecoderLayer(LlamaDecoderBlockAdaptersMixin, nn.Module):
     def __init__(self, config: LlamaConfig):
         super().__init__()
+        self.config = config
         self.hidden_size = config.hidden_size
         self.self_attn = LlamaAttention(config=config)
         self.mlp = LlamaMLP(config)
