@@ -122,6 +122,10 @@ _import_structure = {
         "OpenLlamaAdapterModel",
         "OpenLlamaModelWithHeads",
     ],
+    "models.llama": [
+        "LlamaAdapterModel",
+        "LlamaModelWithHeads",
+    ],
     "models.roberta": [
         "RobertaAdapterModel",
         "RobertaModelWithHeads",
