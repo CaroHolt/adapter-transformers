@@ -397,6 +397,7 @@ def load_state_dict(checkpoint_file: Union[str, os.PathLike]):
     """
     Reads a PyTorch checkpoint file, returning properly formatted errors if they arise.
     """
+    print(checkpoint_file)
     if checkpoint_file.endswith(".safetensors") and is_safetensors_available():
         # Check format of the archive
         with safe_open(checkpoint_file, framework="pt") as f:
