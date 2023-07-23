@@ -626,6 +626,7 @@ class LlamaModel(LlamaModelAdapterMixin, LlamaPreTrainedModel):
         return combined_attention_mask
 
     @add_start_docstrings_to_model_forward(LLAMA_INPUTS_DOCSTRING)
+    @ForwardContext.wrap
     def forward(
         self,
         input_ids: torch.LongTensor = None,
@@ -685,6 +686,7 @@ class LlamaModel(LlamaModelAdapterMixin, LlamaPreTrainedModel):
         )
 
         hidden_states = inputs_embeds
+
 
         if self.gradient_checkpointing and self.training:
             if use_cache:
