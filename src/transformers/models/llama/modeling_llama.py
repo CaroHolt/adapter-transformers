@@ -655,9 +655,11 @@ class LlamaModel(LlamaModelAdapterMixin, LlamaPreTrainedModel):
         if input_ids is not None and inputs_embeds is not None:
             raise ValueError("You cannot specify both decoder_input_ids and decoder_inputs_embeds at the same time")
         elif input_ids is not None:
+            input_shape = input_ids.size()
             batch_size, seq_length = input_ids.shape
         elif inputs_embeds is not None:
             batch_size, seq_length, _ = inputs_embeds.shape
+            input_shape = inputs_embeds.size()[:-1]
         else:
             raise ValueError("You have to specify either decoder_input_ids or decoder_inputs_embeds")
 
@@ -699,6 +701,8 @@ class LlamaModel(LlamaModelAdapterMixin, LlamaPreTrainedModel):
                 )
                 use_cache = False
 
+        output_shape = input_shape + (hidden_states.size(-1),)
+
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
         all_self_attns = () if output_attentions else None
@@ -738,6 +742,9 @@ class LlamaModel(LlamaModelAdapterMixin, LlamaPreTrainedModel):
 
             hidden_states = layer_outputs[0]
             (attention_mask,) = adjust_tensors_for_parallel(hidden_states, attention_mask)
+            # also adjust output shape if necessary
+            if getattr(ForwardContext.get_context(), "adapters_parallelized", False):
+                output_shape = hidden_states.size()
 
 
             if use_cache:
@@ -746,7 +753,9 @@ class LlamaModel(LlamaModelAdapterMixin, LlamaPreTrainedModel):
             if output_attentions:
                 all_self_attns += (layer_outputs[1],)
 
-        hidden_states = self.norm(hidden_states)
+        hidden_states = self.norm(hidden_states)#
+
+        hidden_states = hidden_states.view(output_shape)
 
         # add hidden states from the last decoder layer
         if output_hidden_states:
