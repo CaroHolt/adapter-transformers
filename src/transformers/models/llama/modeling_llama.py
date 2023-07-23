@@ -356,6 +356,10 @@ class LlamaAttention(nn.Module):
                     f"Attention mask should be of size {(bsz, 1, q_len, kv_seq_len)}, but is {attention_mask.size()}"
                 )
             attn_weights = attn_weights + attention_mask
+            
+
+        key_states, value_states, attention_mask = self.prefix_tuning(key_states, value_states, hidden_states, attention_mask)
+        (query_states,) = adjust_tensors_for_parallel(key_states, query_states)
 
         # upcast attention to fp32
         attn_weights = nn.functional.softmax(attn_weights, dim=-1, dtype=torch.float32).to(query_states.dtype)
@@ -725,6 +729,7 @@ class LlamaModel(LlamaModelAdapterMixin, LlamaPreTrainedModel):
                 )
 
             hidden_states = layer_outputs[0]
+            (attention_mask,) = adjust_tensors_for_parallel(hidden_states, attention_mask)
 
 
             if use_cache:
