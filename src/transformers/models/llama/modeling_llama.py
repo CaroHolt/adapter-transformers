@@ -247,7 +247,7 @@ def repeat_kv(hidden_states: torch.Tensor, n_rep: int) -> torch.Tensor:
 class LlamaAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
-    def __init__(self, config: LlamaConfig):
+    def __init__(self, config: LlamaConfig, location_key: Optional[str] = None):
         super().__init__()
         self.config = config
         self.hidden_size = config.hidden_size
@@ -268,7 +268,7 @@ class LlamaAttention(nn.Module):
         self.o_proj = nn.Linear(self.num_heads * self.head_dim, self.hidden_size, bias=False)
         self._init_rope()
 
-        location_key = "cross_prefix" if self.is_cross_attention else "self_prefix"
+        location_key = "self_prefix"
         self.prefix_tuning = PrefixTuningShim(location_key, config)
 
 
