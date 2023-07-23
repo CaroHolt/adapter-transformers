@@ -128,6 +128,7 @@ class ForwardContext:
         print(cls)
         if not hasattr(cls.storage, "contexts"):
             cls.storage.contexts = []
+        print(cls.storage.contexts)
         return cls.storage.contexts
 
     @classmethod
