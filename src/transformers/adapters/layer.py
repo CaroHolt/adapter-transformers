@@ -46,10 +46,6 @@ class AdapterLayerBase(ABC):
 
     def _store_gating_score(self, adapter_name, gating_score):
         context = ForwardContext.get_context()
-        print("context")
-        print('************************')
-        print(context)
-        print('************************')
         if context.output_adapter_gating_scores:
             gating_cache = context.adapter_gating_scores
             if self.layer_idx not in gating_cache[adapter_name]:
@@ -233,10 +229,6 @@ class AdapterLayer(AdapterLayerBase, nn.Module):
                 adapter_layer = self.adapters[adapter_stack_layer]
                 hidden_states, _, residual = adapter_layer.pre_forward(hidden_states, input_tensor, layer_norm)
                 context = ForwardContext.get_context()
-                print("context")
-                print('************************')
-                print(context)
-                print('************************')
                 layer_output = adapter_layer(
                     hidden_states, residual_input=residual, output_gating=context.output_adapter_gating_scores
                 )
