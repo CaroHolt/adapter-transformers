@@ -23,6 +23,7 @@ class LlamaDecoderBlockAdaptersMixin:
 
 
 class LlamaModelAdapterMixin(EmbeddingAdaptersMixin, InvertibleAdaptersMixin, ModelAdaptersMixin):
+    print("Iterated through these")
     def iter_layers(self) -> Iterable[Tuple[int, nn.Module]]:
         for i, layer in enumerate(self.layers):
             yield i, layer
