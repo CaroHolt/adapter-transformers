@@ -849,6 +849,9 @@ class ModelAdaptersMixin(PushAdapterToHubMixin, ABC):
         This method is called by the ``ForwardContext`` at the beginning of the forward pass.
         """
         # some warnings if we don't use available adapters
+        print('************************')
+        print('hello I am here')
+        print('************************')
         active_adapters = getattr(self, "active_adapters", None) or AdapterSetup.get_context_adapter_setup()
         if not active_adapters:
             if self.has_adapters():
