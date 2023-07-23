@@ -268,6 +268,14 @@ class LlamaAttention(nn.Module):
         self.o_proj = nn.Linear(self.num_heads * self.head_dim, self.hidden_size, bias=False)
         self._init_rope()
 
+        location_key = "cross_prefix" if self.is_cross_attention else "self_prefix"
+        self.prefix_tuning = PrefixTuningShim(location_key, config)
+
+
+
+
+
+
     def _init_rope(self):
         if self.config.rope_scaling is None:
             self.rotary_emb = LlamaRotaryEmbedding(self.head_dim, max_position_embeddings=self.max_position_embeddings)
